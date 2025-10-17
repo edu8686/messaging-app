@@ -19,18 +19,15 @@ export default function Login() {
     try {
       const response = await loginService(username, password);
 
-      // 👇 Seteamos estado y esperamos a que React lo procese
       await new Promise((resolve) => {
         setLoginUser(response.user);
         setToken(response.token);
         localStorage.setItem("token", response.token);
         getChats(response.user.id)
-        // Microtask: esperar un ciclo de evento antes de navegar
         queueMicrotask(resolve);
       });
 
-      // No usamos loginUser.id acá, esperamos al próximo render
-      navigate("/home"); // ✅ navegamos a Home
+      navigate("/home"); 
     } catch (err) {
       console.error(err);
       setError(err.message || "Error al iniciar sesión");

@@ -10,7 +10,7 @@ import { login as loginService } from "./service/login";
 const AppContext = createContext();
 
 export function AppProvider({ children }) {
-  // Persistimos loginUser y token usando localStorage
+  
   const [loginUser, setLoginUser] = useState(() => {
     const savedUser = localStorage.getItem("loginUser");
     return savedUser ? JSON.parse(savedUser) : null;
@@ -24,7 +24,7 @@ export function AppProvider({ children }) {
   const [chats, setChats] = useState(null);
   const [groupUsers, setGroupUsers] = useState([]);
 
-  // Guardar user y token en localStorage al cambiar
+
   useEffect(() => {
     if (loginUser) {
       localStorage.setItem("loginUser", JSON.stringify(loginUser));
@@ -41,7 +41,7 @@ export function AppProvider({ children }) {
     }
   }, [token]);
 
-  // Al montar, recargar chats si hay usuario
+
   useEffect(() => {
     if (loginUser?.id) {
       getChats(loginUser.id);

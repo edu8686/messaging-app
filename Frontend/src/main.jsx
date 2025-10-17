@@ -17,7 +17,7 @@ import { ErrorBoundary } from "./ErrorBoundary.jsx";
 
 console.log("App renderizada correctamente");
 
-// --- Componentes inline para rutas protegidas y públicas ---
+
 const Protected = ({ children }) => {
   const { loginUser } = useContext(AppContext);
   return loginUser ? children : <Navigate to="/login" replace />;
@@ -28,7 +28,7 @@ const Public = ({ children }) => {
   return loginUser ? <Navigate to="/home" replace /> : children;
 };
 
-// --- Router principal ---
+
 const router = createBrowserRouter([
   {
     path: "/login",
@@ -55,9 +55,9 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        element: <MainWindow />, // Sidebar fijo + outlet para contenido
+        element: <MainWindow />, 
         children: [
-          { path: "", element: <Navigate to="home" replace /> }, // Redirige "/" a "/home"
+          { path: "", element: <Navigate to="home" replace /> }, 
           { path: "home", element: <Home /> },
           { path: "chats", element: <MessagingLayout /> },
           { path: "profile/:id", element: <Profile /> },

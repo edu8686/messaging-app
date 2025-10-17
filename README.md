@@ -16,15 +16,15 @@ Aplicación de mensajería en tiempo real que permite a los usuarios registrarse
 ### Backend
 - Node.js
 - Express
-- MongoDB
+- Prisma
+- Postgres
 - JWT para autenticación
 
 ### Frontend
 - React
 - React Router
 - Context API para manejo de estado
-- CSS / Tailwind (según tu elección)
-- WebSockets (Socket.IO) para mensajería en tiempo real
+- CSS / Tailwind 
 
 ---
 
