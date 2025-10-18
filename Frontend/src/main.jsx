@@ -14,6 +14,7 @@ import MainWindow from "./pages/MainWindow.jsx";
 import New from "./components/New.jsx";
 import FormNewGroup from "./components/FormNewGroup.jsx";
 import { ErrorBoundary } from "./ErrorBoundary.jsx";
+import NewChatUI from "./components/NewChatUI.jsx";
 
 console.log("App renderizada correctamente");
 
@@ -63,6 +64,7 @@ const router = createBrowserRouter([
           { path: "profile/:id", element: <Profile /> },
           { path: "new", element: <New /> },
           { path: "new/new-group", element: <FormNewGroup /> },
+          { path: "new/new-chat", element: <NewChatUI /> },
         ],
       },
     ],

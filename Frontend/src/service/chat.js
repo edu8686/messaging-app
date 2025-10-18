@@ -7,32 +7,43 @@ export async function createChat(userId, receiverId) {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ userId, receiverId }),
     });
-    const data = chat.json();
+
+    console.log("➡️ Response status:", chat.status);
+
+    const data = await chat.json(); // leer solo una vez
+    console.log("➡️ Chat creado:", data);
+
     return data;
   } catch (err) {
-    console.log(err);
+    console.error("❌ Error en createChat:", err);
+    return null;
   }
 }
 
-export async function onCreateGroup(groupChat) {
 
-  const token = localStorage.getItem("token")
+export async function onCreateGroup(groupChat, creatorId) {
+  const token = localStorage.getItem("token");
 
   try {
-    const chat = await fetch(`${API_URL}/chats/new-group`, {
+    const res = await fetch(`${API_URL}/chats/new-group`, {
       method: "POST",
-      headers: { 
+      headers: {
         "content-type": "application/json",
-        Authorization : `Bearer ${token}`
-       },
-      body: JSON.stringify(groupChat),
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ ...groupChat, creatorId }),
     });
-    const data = chat.json();
+
+    if (!res.ok) throw new Error("Error al crear el grupo");
+
+    const data = await res.json();
     return data;
   } catch (err) {
-    console.log(err);
+    console.error("Error en onCreateGroup:", err);
+    throw err;
   }
 }
+
 
 export async function createGroupChat(participantsId, groupName) {
   try {
@@ -41,17 +52,15 @@ export async function createGroupChat(participantsId, groupName) {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ participantsId, groupName }),
     });
-    const data = chat.json();
+    const data = await chat.json(); // ✅
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("Error en createGroupChat:", err);
   }
 }
 
-
 export async function findChat(userId, receiverId) {
   const token = localStorage.getItem("token");
-
   try {
     const res = await fetch(`${API_URL}/chats/${userId}/with/${receiverId}`, {
       method: "GET",
@@ -74,8 +83,7 @@ export async function findChat(userId, receiverId) {
 
 export async function findGroupChat(userId, chatId) {
   const token = localStorage.getItem("token");
-
-    try {
+  try {
     const res = await fetch(`${API_URL}/chats/user/${userId}/chat/${chatId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
@@ -97,35 +105,34 @@ export async function findGroupChat(userId, chatId) {
 
 export async function findChats(userId) {
   const token = localStorage.getItem("token");
-
   try {
     const chats = await fetch(`${API_URL}/chats/${userId}/all`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
-    if (!chats) {
+    if (!chats.ok) {
       return "No results";
     }
-    const data = chats.json();
+    const data = await chats.json(); // ✅
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("Error en findChats:", err);
   }
 }
 
 export async function deleteChat(chatId) {
   const token = localStorage.getItem("token");
-  console.log("Funcion delete ejecutada")
+  console.log("Funcion delete ejecutada");
 
   try {
     const chat = await fetch(`${API_URL}/chats/${chatId}`, {
-      method : "DELETE", 
-      headers : { Authorization : `Bearer ${token}`}
-    })
-    const data = await chat.json();
-    console.log(data)
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await chat.json(); // ✅
+    console.log("Delete response:", data);
     return data;
   } catch (err) {
-    console.log(err)
+    console.log("Error en deleteChat:", err);
   }
 }

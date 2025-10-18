@@ -22,6 +22,8 @@ function SideBar() {
     setSelection(newSelection);
 
     const chatsTab = chats.chats;
+    console.log(chatsTab)
+    console.log(typeof chatsTab)
     if (newSelection === "all") {
       setChatsSelection(chatsTab);
     } else if (newSelection === "group") {

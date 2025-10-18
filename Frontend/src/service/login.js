@@ -14,6 +14,7 @@ export async function login(username, password) {
     });
 
     const data = await res.json();
+    console.log(data)
 
     if (res.ok && data.token) {
       

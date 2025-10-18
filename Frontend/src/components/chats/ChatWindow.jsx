@@ -12,28 +12,37 @@ export default function ChatWindow() {
   const fileInputRef = useRef(null);
   const messagesEndRef = useRef(null);
 
-  useEffect(() => {
-    const chatData = currentChat?.chat || { id: null, messages: [] };
-    setMessages(chatData.messages);
-  }, [currentChat]);
+useEffect(() => {
+  const chatData = currentChat?.chat || { id: null, messages: [] };
+  setMessages(chatData.messages);
+}, [currentChat?.chat?.id]);
+
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   async function handleSend(isImage, file) {
-    if ((!newMessage.trim() || !currentChat?.chat) && isImage === false) return;
+    const chatId = currentChat?.chat?.id;
+    if (!chatId && isImage === false) {
+      console.warn("No hay chat seleccionado para enviar el mensaje");
+      return;
+    }
 
-    const chat = await sendMessage(
-      currentChat.chat.id,
+    const chatData = await sendMessage(
+      chatId,
       loginUser.id,
       newMessage,
       isImage,
       file
     );
 
-    setMessages(chat.chat.messages);
-    setNewMessage("");
+    if (chatData?.chat?.messages) {
+      setMessages(chatData.chat.messages);
+      setNewMessage("");
+    } else {
+      console.error("No se recibieron mensajes del backend", chatData);
+    }
   }
 
   function handleKeyPress(e) {
@@ -109,7 +118,7 @@ export default function ChatWindow() {
           onClick={() => handleSend(false, null)}
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors"
         >
-          Enviar
+          Send
         </button>
       </div>
     </div>

@@ -30,7 +30,7 @@ export default function Login() {
       navigate("/home"); 
     } catch (err) {
       console.error(err);
-      setError(err.message || "Error al iniciar sesión");
+      setError("Wrong username or password");
     } finally {
       setLoading(false);
     }

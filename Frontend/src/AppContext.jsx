@@ -21,7 +21,7 @@ export function AppProvider({ children }) {
   });
 
   const [currentChat, setCurrentChat] = useState(null);
-  const [chats, setChats] = useState(null);
+  const [chats, setChats] = useState([]);
   const [groupUsers, setGroupUsers] = useState([]);
 
 
@@ -58,11 +58,12 @@ export function AppProvider({ children }) {
     setGroupUsers([...groupUsers, user]);
   }
 
-  async function selectChat(user1Id, user2Id) {
-    const chat = await findChatService(user1Id, user2Id);
-    setCurrentChat(chat || { chat: { id: null, messages: [] } });
-    return chat;
-  }
+async function selectChat(user1Id, user2Id) {
+  const chat = await findChatService(user1Id, user2Id);
+  setCurrentChat({ ...chat }); // fuerza nueva referencia
+  return chat;
+}
+
 
   async function selectGroupChat(userId, chatId) {
     const chat = await findGroupChatService(userId, chatId);
@@ -72,6 +73,7 @@ export function AppProvider({ children }) {
 
   async function getChats(userId) {
     const chatsData = await findChats(userId);
+    console.log("chaats getChats App context:", chatsData)
     setChats(chatsData);
   }
 
