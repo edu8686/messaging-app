@@ -39,6 +39,5 @@ app.use("/profile", profileRouter)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
-})
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
