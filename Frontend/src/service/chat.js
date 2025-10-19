@@ -8,14 +8,12 @@ export async function createChat(userId, receiverId) {
       body: JSON.stringify({ userId, receiverId }),
     });
 
-    console.log("➡️ Response status:", chat.status);
 
-    const data = await chat.json(); // leer solo una vez
-    console.log("➡️ Chat creado:", data);
+    const data = await chat.json(); 
 
     return data;
   } catch (err) {
-    console.error("❌ Error en createChat:", err);
+    console.error(" Error en createChat:", err);
     return null;
   }
 }
@@ -52,7 +50,7 @@ export async function createGroupChat(participantsId, groupName) {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ participantsId, groupName }),
     });
-    const data = await chat.json(); // ✅
+    const data = await chat.json(); 
     return data;
   } catch (err) {
     console.log("Error en createGroupChat:", err);
@@ -73,7 +71,7 @@ export async function findChat(userId, receiverId) {
     }
 
     const data = await res.json();
-    console.log("Data de findChat:", data);
+
     return data;
   } catch (err) {
     console.error("Error en findChat:", err);
@@ -95,7 +93,6 @@ export async function findGroupChat(userId, chatId) {
     }
 
     const data = await res.json();
-    console.log("Data de findGroupChat:", data);
     return data;
   } catch (err) {
     console.error("Error en findGroupChat:", err);
@@ -113,7 +110,7 @@ export async function findChats(userId) {
     if (!chats.ok) {
       return "No results";
     }
-    const data = await chats.json(); // ✅
+    const data = await chats.json(); 
     return data;
   } catch (err) {
     console.log("Error en findChats:", err);
@@ -129,8 +126,7 @@ export async function deleteChat(chatId) {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
-    const data = await chat.json(); // ✅
-    console.log("Delete response:", data);
+    const data = await chat.json(); 
     return data;
   } catch (err) {
     console.log("Error en deleteChat:", err);

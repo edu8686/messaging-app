@@ -6,7 +6,7 @@ export default function New() {
 
   return (
     <div className="flex gap-8 justify-center items-center h-full">
-      {/* Nuevo Chat */}
+      
       <button className="flex flex-col items-center justify-center w-48 h-48 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-lg transition-colors"
             onClick={() => {
         navigate("/new/new-chat");
@@ -16,7 +16,7 @@ export default function New() {
         <span className="mt-4 text-xl font-bold">New Chat</span>
       </button>
 
-      {/* Nuevo Grupo */}
+      
       <button 
       onClick={() => {
         navigate("/new/new-group");

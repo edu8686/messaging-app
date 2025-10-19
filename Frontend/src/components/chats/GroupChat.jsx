@@ -6,7 +6,7 @@ export default function GroupChat({ chat, messages, messagesEndRef }) {
 
   return (
     <div className="flex-1 flex flex-col bg-gray-50 min-h-0">
-      {/* Encabezado de grupo estilo WhatsApp */}
+      
       <div className="bg-green-600 text-white p-3 shadow-md">
         <p className="text-lg font-semibold text-center">{chat.name}</p>
         <p className="text-xs text-center opacity-90 truncate">
@@ -14,27 +14,27 @@ export default function GroupChat({ chat, messages, messagesEndRef }) {
         </p>
       </div>
 
-      {/* Historial de mensajes */}
+      
       <div className="flex-1 overflow-y-auto p-4 min-h-0">
         {messages.length > 0 ? (
           messages.map((msg, index) => {
             const isOwnMessage = msg.sender.id === loginUser.id;
 
-            // Obtener fecha del mensaje actual
+            
             const msgDate = new Date(msg.createdAt).toLocaleDateString();
 
-            // Obtener fecha del mensaje anterior
+           
             const prevMsgDate =
               index > 0
                 ? new Date(messages[index - 1].createdAt).toLocaleDateString()
                 : null;
 
-            // Decidir si mostrar el separador de fecha
+            
             const showDateDivider = msgDate !== prevMsgDate;
 
             return (
               <div key={msg.id} className="mb-2">
-                {/* Separador de fecha */}
+                
                 {showDateDivider && (
                   <div className="flex justify-center my-2">
                     <span className="text-gray-400 text-xs bg-gray-200 px-2 py-1 rounded-full shadow-sm">
@@ -43,7 +43,7 @@ export default function GroupChat({ chat, messages, messagesEndRef }) {
                   </div>
                 )}
 
-                {/* Mensaje */}
+                
                 <div
                   className={`flex ${
                     isOwnMessage ? "justify-end" : "justify-start"

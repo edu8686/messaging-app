@@ -53,12 +53,12 @@ export default function Searchbar({ borderless = false }) {
               onClick={() => handleSelect(user)}
               className="flex items-center gap-3 p-3 hover:bg-blue-50 cursor-pointer transition-colors"
             >
-              {/* Avatar */}
+              
               <div className="w-10 h-10 flex-shrink-0 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-bold">
                 {user.name ? user.name[0].toUpperCase() : "?"}
               </div>
 
-              {/* Datos */}
+              
               <div className="flex flex-col">
                 <span className="font-semibold text-gray-800">
                   {user.name || user.username}

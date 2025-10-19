@@ -2,27 +2,50 @@ import { useContext } from "react";
 import { AppContext } from "../../AppContext";
 
 export default function IndividualChat({ messages, messagesEndRef }) {
-  const { obtainHour, loginUser } = useContext(AppContext);
+  const { obtainHour, loginUser, currentChat } = useContext(AppContext);
+
+
+  function handleLoading() {
+  if (!currentChat || !currentChat.chat || !currentChat.chat.users) {
+    return ;
+  }
+
+  const otherUser = currentChat.chat.users.filter(
+    (user) => user.id !== loginUser.id
+  );
+
+  if (otherUser.length === 0) return "Usuario desconocido";
+
+  return otherUser[0].name;
+}
+
 
   return (
     <div className="flex-1 overflow-y-auto p-4 bg-gray-50 min-h-0">
+      <div className="bg-blue-400 text-white p-3 shadow-md -mx-4 -mt-4 pb-6">
+        <p className="text-md text-center opacity-90 truncate">
+          {handleLoading()}
+        </p>
+      </div>
       {messages.length > 0 ? (
         messages.map((msg, index) => {
           const isOwnMessage = msg.sender.id === loginUser.id;
 
-          // Fecha del mensaje actual
+         
           const msgDate = new Date(msg.createdAt).toLocaleDateString();
 
-          // Fecha del mensaje anterior
+          
           const prevMsgDate =
-            index > 0 ? new Date(messages[index - 1].createdAt).toLocaleDateString() : null;
+            index > 0
+              ? new Date(messages[index - 1].createdAt).toLocaleDateString()
+              : null;
 
-          // Mostrar separador de fecha solo si cambia
+         
           const showDateDivider = msgDate !== prevMsgDate;
 
           return (
             <div key={msg.id} className="mb-2">
-              {/* Separador de fecha */}
+              
               {showDateDivider && (
                 <div className="flex justify-center my-2">
                   <span className="text-gray-400 text-xs bg-gray-200 px-2 py-1 rounded-full shadow-sm">
@@ -31,8 +54,12 @@ export default function IndividualChat({ messages, messagesEndRef }) {
                 </div>
               )}
 
-              {/* Mensaje */}
-              <div className={`flex ${isOwnMessage ? "justify-end" : "justify-start"}`}>
+              
+              <div
+                className={`flex ${
+                  isOwnMessage ? "justify-end" : "justify-start"
+                }`}
+              >
                 <div
                   className={`px-4 py-2 rounded-lg max-w-xs break-words flex flex-col shadow ${
                     isOwnMessage
@@ -40,7 +67,7 @@ export default function IndividualChat({ messages, messagesEndRef }) {
                       : "bg-gray-200 text-gray-900"
                   }`}
                 >
-                  {/* Nombre alineado */}
+                  
                   <div
                     className={`text-xs font-bold px-2 py-0.5 rounded-full inline-block shadow-sm mb-1 ${
                       isOwnMessage

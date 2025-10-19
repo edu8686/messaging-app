@@ -11,7 +11,7 @@ export default function ProtectedRoute({ children }) {
 
     const now = Date.now();
     if (now > sessionExpiration) {
-      setExpired(true); // La sesión expiró
+      setExpired(true); 
     } else {
       const timer = setTimeout(() => {
         setExpired(true);

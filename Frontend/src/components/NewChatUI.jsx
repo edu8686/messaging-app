@@ -8,7 +8,7 @@ export default function NewChatUI() {
           Start a conversation
         </h2>
 
-        {/* Barra de búsqueda */}
+        
         <Searchbar borderless={false} />
       </div>
     </div>

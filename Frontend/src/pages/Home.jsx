@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center py-12 px-4">
       <div className="w-full max-w-2xl">
-        {/* Header */}
+       
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-2">
             Bienvenido {loginUser?.name || ""}
@@ -46,12 +46,12 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Search */}
+       
         <div className="mb-8">
           <Searchbar onSelectUser={handleSelectUser} />
         </div>
 
-        {/* Selected User Preview */}
+        
         {selectedUser && (
           <div className="mb-8">
             <p className="text-gray-700 mb-2 text-center">Usuario seleccionado:</p>
@@ -69,7 +69,7 @@ export default function Home() {
           </div>
         )}
 
-        {/* Button to Chats */}
+        
         <div className="flex justify-center">
           <button
             onClick={goToChats}

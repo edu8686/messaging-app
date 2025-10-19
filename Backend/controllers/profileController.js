@@ -3,27 +3,26 @@ const { getLatLngFromCity } = require("../utils/geocoding"); // función para ob
 
 async function createProfile(req, res) {
   try {
-    const { userId, name, lastName, about, location, avatarUrl } = req.body;
+    const { name, lastName, about, location, avatarUrl } = req.body;
 
     let latitude = null;
     let longitude = null;
 
     if (location) {
-      const res = await fetch(
+      const geoRes = await fetch(
         `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
           location
         )}&key=${process.env.OPENCAGE_KEY}`
       );
-      const data = await res.json();
-      if (data.results.length > 0) {
-        latitude = data.results[0].geometry.lat;
-        longitude = data.results[0].geometry.lng;
+      const geoData = await geoRes.json();
+      if (geoData.results.length > 0) {
+        latitude = geoData.results[0].geometry.lat;
+        longitude = geoData.results[0].geometry.lng;
       }
     }
 
     const newProfile = await prisma.profile.create({
       data: {
-        userId: Number(userId),
         name,
         lastName,
         about,
@@ -31,6 +30,9 @@ async function createProfile(req, res) {
         latitude,
         longitude,
         avatarUrl,
+        user: {
+          connect: { id: req.user.id }, // 👈 aquí conectamos con el usuario autenticado
+        },
       },
     });
 
@@ -46,24 +48,27 @@ async function createProfile(req, res) {
   }
 }
 
+
 async function findProfile(req, res) {
-  const { profile_id } = req.params;
+  const { user_id } = req.params; // asumimos que la URL tiene /profile/:user_id
 
   console.log("Ingresó a findProfile");
 
   try {
     const profile = await prisma.profile.findFirst({
       where: {
-        id: Number(profile_id),
+        userId: Number(user_id), // <-- buscar por userId
       },
     });
     console.log(profile);
 
-    res.status(200).json({ Message: "Profile found", profile });
+    res.status(200).json({ message: "Profile found", profile });
   } catch (err) {
     console.log(err);
+    res.status(500).json({ message: "Error fetching profile", error: err.message });
   }
 }
+
 
 async function createHobby(req, res) {
   try {

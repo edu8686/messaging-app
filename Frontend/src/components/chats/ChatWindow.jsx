@@ -51,12 +51,12 @@ useEffect(() => {
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
-      {/* Barra de búsqueda */}
+      
       <div className="p-2 border rounded-md border-gray-300/40">
         <Searchbar borderless />
       </div>
 
-      {/* Área de mensajes con scroll */}
+      
       <div className="flex-1 overflow-y-auto p-4 min-h-0">
         {currentChat?.chat?.isGroup ? (
           <GroupChat
@@ -70,7 +70,7 @@ useEffect(() => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input fijo abajo */}
+      
       <div className="p-2 border rounded-sm border-gray-300 flex gap-2">
         <input
           type="text"
@@ -86,7 +86,7 @@ useEffect(() => {
           onClick={() => fileInputRef.current.click()}
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
         >
-          {/* Icono de imagen */}
+          
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

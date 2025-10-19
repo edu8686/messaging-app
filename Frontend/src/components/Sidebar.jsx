@@ -37,7 +37,7 @@ function SideBar() {
 
   return (
     <div className="w-64 h-full border border-gray-300 rounded-l-xl bg-gray-100 p-4 flex flex-col gap-4 shadow-md">
-      {/* Botones de selección */}
+      
       <div className="flex justify-between">
         <button
           onClick={() => handleButtonClick("all")}
@@ -81,7 +81,7 @@ function SideBar() {
         </button>
       </div>
 
-      {/* Lista de chats */}
+      
       <div className="flex flex-col gap-2">
         {chatsSelection.length > 0 ? (
           chatsSelection.map((chat) =>
@@ -124,7 +124,7 @@ function SideBar() {
                         {otherUser.name[0]}
                       </div>
                       <p className="font-medium">{otherUser.name}</p>
-                      { otherUser.isOnline === true ? <div className="text-sm border border-green-400 bg-amber-50 rounded-xl p-0.5">online</div> : (console.log("Not")) }
+                      { otherUser.isOnline === true ? <div className="text-sm border border-green-400 bg-amber-50 rounded-xl p-0.5">online</div> : (console.log("Not online")) }
                     </button>
 
                     <button

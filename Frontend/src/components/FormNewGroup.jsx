@@ -21,12 +21,12 @@ export default function FormNewGroup() {
           description: groupDesc,
           members: groupUsers,
         },
-        loginUser.id // pasamos el creador
+        loginUser.id 
       );
 
       console.log("Grupo creado:", data.chat);
 
-      // Reset form
+      
       setGroupName("");
       setGroupDesc("");
       setGroupUsers([]);

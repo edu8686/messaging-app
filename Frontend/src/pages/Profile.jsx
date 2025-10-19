@@ -5,6 +5,8 @@ import { useFetchProfile } from "../hooks/useFetchProfile";
 import GlobeAnimation from "../components/profile-sections/Location";
 import About from "../components/profile-sections/About";
 import Hobbies from "../components/profile-sections/Hobbies";
+import CreateProfile from "./CreateProfile"; 
+import { getProfile } from "../service/profile";
 import { API_URL } from "../config";
 
 export default function Profile() {
@@ -12,10 +14,12 @@ export default function Profile() {
   const { loginUser, token } = useContext(AppContext);
   const { isPending, error, userProfile, isLoggedInUser, setUserProfile } = useFetchProfile(id);
 
+  console.log("Id componenete Profile: ", id)
+
   const [isEditing, setIsEditing] = useState(false);
   const [newCity, setNewCity] = useState("");
 
-  // Inicializar input con ciudad del perfil
+  
   useEffect(() => {
     if (userProfile) setNewCity(userProfile.location || "");
   }, [userProfile]);
@@ -34,7 +38,6 @@ export default function Profile() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "No se pudo actualizar la ciudad");
 
-      // Actualizar estado local para refrescar la UI
       setUserProfile((prev) => ({
         ...prev,
         location: data.location,
@@ -51,13 +54,27 @@ export default function Profile() {
 
   if (isPending) return <p className="text-center mt-4">Cargando perfil...</p>;
   if (error) return <p className="text-center mt-4 text-red-500">Error: {error}</p>;
-  if (!userProfile) return <p className="text-center mt-4">No se encontró el perfil.</p>;
+
+
+  // Si no hay perfil
+  if (!userProfile) {
+
+    if (isLoggedInUser) {
+      return <CreateProfile />;
+    } else {
+      return (
+        <div className="text-center mt-6 text-gray-500">
+          <p>El usuario aún no completó su perfil.</p>
+        </div>
+      );
+    }
+  }
 
   return (
     <div className="max-w-5xl mx-auto mt-6 bg-white rounded-3xl shadow-md p-6 space-y-6">
-      {/* Header: datos de perfil y globo */}
+      
       <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-        {/* Info del usuario */}
+        
         <div className="flex-1 flex flex-col items-start gap-4">
           <div className="flex items-center gap-4">
             <img
@@ -71,7 +88,7 @@ export default function Profile() {
               </h2>
               <p className="text-gray-600">{userProfile.location || "Ubicación desconocida"}</p>
 
-              {/* Editar ciudad */}
+              
               {isLoggedInUser && (
                 <div className="mt-2">
                   {isEditing ? (
@@ -109,7 +126,7 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* Globo */}
+       
         <GlobeAnimation
           lat={userProfile.latitude}
           lng={userProfile.longitude}
@@ -117,7 +134,7 @@ export default function Profile() {
         />
       </div>
 
-      {/* Secciones del perfil */}
+      
       <About userProfile={userProfile} isEditable={isLoggedInUser} />
       <Hobbies hobbies={userProfile.hobbies} isEditable={isLoggedInUser} />
     </div>

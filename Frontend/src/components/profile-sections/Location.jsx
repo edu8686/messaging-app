@@ -49,7 +49,7 @@ export default function GlobeAnimation({ lat, lng, cityName }) {
         />
 
         <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-md text-black px-4 py-2 rounded-full shadow-md">
-          📍 {cityName}
+           {cityName}
         </div>
       </div>
     </div>

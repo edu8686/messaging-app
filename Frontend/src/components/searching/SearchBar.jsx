@@ -6,7 +6,7 @@ import { AppContext } from "../../AppContext.jsx";
 
 export default function Searchbar({ borderless = false }) {
   const navigate = useNavigate();
-  const { loginUser, selectChat, getChats } = useContext(AppContext);
+  const { loginUser, selectChat, getChats, currentChat, setCurrentChat } = useContext(AppContext);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
 
@@ -31,28 +31,27 @@ export default function Searchbar({ borderless = false }) {
 
     if (action === "Send message") {
       try {
-        // 1️⃣ Buscar chat existente
+        
         let chatExistente = await findChat(loginUser.id, user.id);
-        console.log("Chat existente: ", chatExistente);
 
-        // 2️⃣ Si no existe, crear chat
+        
         if (!chatExistente?.chat) {
           chatExistente = await createChat(loginUser.id, user.id);
-          console.log("Chat creado");
+          await getChats(loginUser.id);
         }
 
-        // 3️⃣ **Seleccionar el chat correcto y actualizar currentChat**
+       
         const chatId = chatExistente?.chat?.id || chatExistente?.newChat?.id;
         if (chatId) {
-          selectChat(chatId); // 🔹 aquí actualizamos currentChat
+          selectChat(loginUser.id, user.id);
         } else {
           console.warn("No se pudo seleccionar el chat, chatId indefinido");
         }
 
-        // 4️⃣ Actualizar lista de chats global
+        
         await getChats(loginUser.id);
 
-        // 5️⃣ Limpiar búsqueda y navegar a chats
+        
         setQuery("");
         setResults([]);
         navigate(`/chats`);
@@ -81,12 +80,12 @@ export default function Searchbar({ borderless = false }) {
               key={user.id}
               className="flex items-center gap-3 p-3 hover:bg-blue-50 transition-colors"
             >
-              {/* Avatar */}
+              
               <div className="w-10 h-10 flex-shrink-0 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-bold">
                 {user.name ? user.name[0].toUpperCase() : "?"}
               </div>
 
-              {/* Datos */}
+              
               <div className="flex flex-col">
                 <span className="font-semibold text-gray-800">
                   {user.name || user.username}
@@ -94,7 +93,7 @@ export default function Searchbar({ borderless = false }) {
                 <span className="text-sm text-gray-500">@{user.username}</span>
               </div>
 
-              {/* Botones de acción */}
+             
               <div className="ml-auto flex gap-2">
                 <button
                   onClick={() => handleSelect(user, "See profile")}

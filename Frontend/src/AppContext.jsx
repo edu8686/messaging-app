@@ -23,6 +23,7 @@ export function AppProvider({ children }) {
   const [currentChat, setCurrentChat] = useState(null);
   const [chats, setChats] = useState([]);
   const [groupUsers, setGroupUsers] = useState([]);
+  const [userProfile, setUserProfile] = useState(null);
 
 
   useEffect(() => {
@@ -60,7 +61,7 @@ export function AppProvider({ children }) {
 
 async function selectChat(user1Id, user2Id) {
   const chat = await findChatService(user1Id, user2Id);
-  setCurrentChat({ ...chat }); // fuerza nueva referencia
+  setCurrentChat({ ...chat }); 
   return chat;
 }
 
@@ -114,6 +115,8 @@ async function selectChat(user1Id, user2Id) {
         addUserToGroup,
         obtainDate,
         obtainHour,
+        userProfile,
+        setUserProfile
       }}
     >
       {children}

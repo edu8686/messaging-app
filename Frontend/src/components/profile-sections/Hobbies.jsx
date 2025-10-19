@@ -11,15 +11,15 @@ export default function Hobbies({ hobbies = [], isEditable }) {
     const token = localStorage.getItem("token");
 
     const response = await fetch(`${API_URL}/profile/${id}/hobby`, {
-      method: "POST", // o PATCH si solo actualizas hobbies
+      method: "POST", 
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ hobby }), // enviar el hobby en el body
+      body: JSON.stringify({ hobby }), 
     });
 
-    const data = await response.json(); // ¡no olvides await!
+    const data = await response.json(); 
     return data;
   }
 
@@ -32,10 +32,10 @@ async function deleteHobbyDatabase(hobby) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ hobby }), // enviamos el hobby a borrar
+    body: JSON.stringify({ hobby }), 
   });
 
-  const data = await response.json(); // await necesario
+  const data = await response.json();
   return data;
 }
 
