@@ -16,7 +16,8 @@ if(process.env.NODE_ENV !== "production") {
 app.use(cors({
     origin: [
       "http://localhost:5174",
-      "https://messaging-app-1-9a6p.onrender.com/"
+      "https://messaging-app-1-9a6p.onrender.com"
+      
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true
