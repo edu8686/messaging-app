@@ -16,7 +16,7 @@ export async function searchUsers(query) {
     if (!res) {
       return "No results";
     }
-    const data = res.json();
+    const data = await res.json();
     return data
   } catch (err) {
     console.log(err);
