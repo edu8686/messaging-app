@@ -1,5 +1,7 @@
 const prisma = require("../prisma");
 
+const BACKEND_URL = process.env.BACKEND_URL;
+
 async function createMessage(req, res) {
   try {
     console.log("Body recibido:", req.body);
