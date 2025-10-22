@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../../AppContext";
+import { API_URL } from "../../config";
 
 export default function IndividualChat({ messages, messagesEndRef }) {
   const { obtainHour, loginUser, currentChat } = useContext(AppContext);
@@ -89,7 +90,7 @@ export default function IndividualChat({ messages, messagesEndRef }) {
 
                   {msg.type === "IMAGE" && msg.image && (
                     <img
-                      src={`http://localhost:3000${msg.image.url}`}
+                      src={`${API_URL}/${msg.image.url}`}
                       alt="Mensaje"
                       className="max-w-xs rounded-lg mt-1"
                     />
