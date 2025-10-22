@@ -29,12 +29,13 @@ async function createMessage(req, res) {
 
     // Si hay archivo, agregar relación con imagen
     if (file) {
+      const imageUrl = file.path;
       messageData.image = {
         create: {
           name: file.originalname,
           mimeType: file.mimetype,
           size: file.size,
-          url: `${process.env.BACKEND_URL}/uploads/${file.filename}`,
+          url: imageUrl,
         },
       };
     }

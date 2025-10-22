@@ -3,9 +3,10 @@ const messageRouter = Router()
 const messageController = require("../controllers/messageController")
 const passport = require("passport")
 
-const multer = require("multer");
+const multer = require('multer');
+const { storage } = require('../cloudinary');
+const upload = multer({ storage });
 
-const upload = multer({ dest: "uploads/" });
 
 
 messageRouter.post("/new_message", (req,res,next) => { console.log(" Pasó por la ruta /new_message"); next(); }, passport.authenticate("jwt", {session : false}), upload.single("file"), messageController.createMessage)
