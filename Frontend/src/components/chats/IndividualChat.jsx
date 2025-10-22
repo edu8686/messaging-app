@@ -95,7 +95,6 @@ export default function IndividualChat({ messages, messagesEndRef }) {
                       className="max-w-xs rounded-lg mt-1"
                     />
                   )}
-                  {console.log(msg.image.url)}
                 </div>
               </div>
             </div>
