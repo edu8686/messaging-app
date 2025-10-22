@@ -8,7 +8,7 @@ const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
 
-messageRouter.post("/new_message", (req,res,next) => { console.log("🚩 Pasó por la ruta /new_message"); next(); }, passport.authenticate("jwt", {session : false}), upload.single("file"), messageController.createMessage)
+messageRouter.post("/new_message", (req,res,next) => { console.log(" Pasó por la ruta /new_message"); next(); }, passport.authenticate("jwt", {session : false}), upload.single("file"), messageController.createMessage)
 
 
 module.exports = messageRouter

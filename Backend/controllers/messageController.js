@@ -32,7 +32,7 @@ async function createMessage(req, res) {
           name: file.originalname,
           mimeType: file.mimetype,
           size: file.size,
-          url: `/uploads/${file.filename}`,
+          url: `${process.env.BACKEND_URL}/uploads/${file.filename}`,
         },
       };
     }
