@@ -5,21 +5,19 @@ import { API_URL } from "../../config";
 export default function IndividualChat({ messages, messagesEndRef }) {
   const { obtainHour, loginUser, currentChat } = useContext(AppContext);
 
-
   function handleLoading() {
-  if (!currentChat || !currentChat.chat || !currentChat.chat.users) {
-    return ;
+    if (!currentChat || !currentChat.chat || !currentChat.chat.users) {
+      return;
+    }
+
+    const otherUser = currentChat.chat.users.filter(
+      (user) => user.id !== loginUser.id
+    );
+
+    if (otherUser.length === 0) return "Usuario desconocido";
+
+    return otherUser[0].name;
   }
-
-  const otherUser = currentChat.chat.users.filter(
-    (user) => user.id !== loginUser.id
-  );
-
-  if (otherUser.length === 0) return "Usuario desconocido";
-
-  return otherUser[0].name;
-}
-
 
   return (
     <div className="flex-1 overflow-y-auto p-4 bg-gray-50 min-h-0">
@@ -32,21 +30,17 @@ export default function IndividualChat({ messages, messagesEndRef }) {
         messages.map((msg, index) => {
           const isOwnMessage = msg.sender.id === loginUser.id;
 
-         
           const msgDate = new Date(msg.createdAt).toLocaleDateString();
 
-          
           const prevMsgDate =
             index > 0
               ? new Date(messages[index - 1].createdAt).toLocaleDateString()
               : null;
 
-         
           const showDateDivider = msgDate !== prevMsgDate;
 
           return (
             <div key={msg.id} className="mb-2">
-              
               {showDateDivider && (
                 <div className="flex justify-center my-2">
                   <span className="text-gray-400 text-xs bg-gray-200 px-2 py-1 rounded-full shadow-sm">
@@ -55,7 +49,6 @@ export default function IndividualChat({ messages, messagesEndRef }) {
                 </div>
               )}
 
-              
               <div
                 className={`flex ${
                   isOwnMessage ? "justify-end" : "justify-start"
@@ -68,7 +61,6 @@ export default function IndividualChat({ messages, messagesEndRef }) {
                       : "bg-gray-200 text-gray-900"
                   }`}
                 >
-                  
                   <div
                     className={`text-xs font-bold px-2 py-0.5 rounded-full inline-block shadow-sm mb-1 ${
                       isOwnMessage
@@ -87,7 +79,7 @@ export default function IndividualChat({ messages, messagesEndRef }) {
                       </span>
                     </p>
                   )}
-
+                  {console.log(msg)}
                   {msg.type === "IMAGE" && msg.image && (
                     <img
                       src={`${msg.image.url}`}

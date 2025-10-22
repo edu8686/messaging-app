@@ -17,16 +17,16 @@ export default function About({ userProfile, isEditable, onSave }) {
           (!editing ? (
             <button
               onClick={() => setEditing(true)}
-              className="text-blue-600 hover:underline text-sm"
+              className="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500"
             >
-              Editar
+              Edit
             </button>
           ) : (
             <button
               onClick={handleSave}
               className="text-green-600 hover:underline text-sm"
             >
-              Guardar
+              Save
             </button>
           ))}
       </div>
