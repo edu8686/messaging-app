@@ -90,7 +90,7 @@ export default function IndividualChat({ messages, messagesEndRef }) {
 
                   {msg.type === "IMAGE" && msg.image && (
                     <img
-                      src={`${API_URL}/${msg.image.url}`}
+                      src={`${API_URL}${msg.image.url}`}
                       alt="Mensaje"
                       className="max-w-xs rounded-lg mt-1"
                     />
